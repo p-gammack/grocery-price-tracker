@@ -1,3 +1,3 @@
 # grocery-price-tracker
 
-Python script to web scrape supermarket websites and track log prices in MySQL databse. 
+Python script to web-scrape supermarket websites and log prices in MySQL database. 
