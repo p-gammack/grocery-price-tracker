@@ -8,8 +8,14 @@ import mysql.connector
 from bs4 import BeautifulSoup
 from pathlib import Path
 
-waitrose_butter_url = 'https://www.waitrose.com/ecom/products/essential-unsalted-dairy-butter/495389-70038-70039'
-page = requests.get(waitrose_butter_url)
+waitrose_unsalted_butter = {
+    "url": 'https://www.waitrose.com/ecom/products/essential-unsalted-dairy-butter/495389-70038-70039'
+}
+sainsburys_unsalted_butter = {
+    "url": 'https://www.sainsburys.co.uk/gol-ui/product/sainsburys-english-butter--unsalted-250g'
+}
+
+page = requests.get(waitrose_unsalted_butter["url"])
 soup = BeautifulSoup(page.content, "html.parser")
 
 content = soup.find(id="content")
@@ -23,7 +29,7 @@ price_per_kg_str = price_per_kg.text[2:][:-4:]
 now = datetime.datetime.now()
 date_str = str(now.date())
 
-database = mysql.connector.connect (
+database = mysql.connector.connect(
     host="localhost",
     user="python",
     password="password",
@@ -38,5 +44,6 @@ dbcursor.execute(sql, sql_val)
 # database.commit()
 
 print(dbcursor.rowcount, "record inserted.")
-print('%s: Current price of Unsalted Butter at Waitrose is £%s £%s' % (date_str, price_per_unit_str, price_per_kg_str))
+print('%s: Current price of Unsalted Butter at Waitrose is £%s £%s' %
+      (date_str, price_per_unit_str, price_per_kg_str))
 time.sleep(5)
