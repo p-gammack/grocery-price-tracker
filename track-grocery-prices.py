@@ -35,7 +35,7 @@ dbcursor = database.cursor()
 sql = "INSERT INTO unsalted_butter (Date, Price_Per_Unit, Price_Per_KG) VALUES (%s, %s, %s)"
 sql_val = (date_str, price_per_unit_str, price_per_kg_str)
 dbcursor.execute(sql, sql_val)
-database.commit()
+# database.commit()
 
 print(dbcursor.rowcount, "record inserted.")
 print('%s: Current price of Unsalted Butter at Waitrose is £%s £%s' % (date_str, price_per_unit_str, price_per_kg_str))
