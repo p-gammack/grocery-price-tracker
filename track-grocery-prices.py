@@ -6,7 +6,21 @@ import re
 import requests
 import mysql.connector
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from pathlib import Path
+
+chrome_options = Options()
+# chrome_options.add_argument("--headless")
+chrome_options.add_argument("--incognito")
+# chrome_options.add_argument("--nogpu")
+# chrome_options.add_argument("--disable-gpu")
+# chrome_options.add_argument("--window-size=1280,1280")
+# chrome_options.add_argument("--no-sandbox")
+# chrome_options.add_argument("--enable-javascript")
+# chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+# chrome_options.add_experimental_option('useAutomationExtension', False)
+# chrome_options.add_argument('--disable-blink-features=AutomationControlled')
 
 waitrose_unsalted_butter = {
     "url": 'https://www.waitrose.com/ecom/products/essential-unsalted-dairy-butter/495389-70038-70039'
@@ -25,7 +39,23 @@ def get_waitrose_unsalted_butter_price_per_kg():
 
     return price_per_kg.text[2:][:-4:]
 
+def get_sainsburys_unsalted_butter_price_per_kg():
+    browser = webdriver.Chrome(options=chrome_options)
+    # browser.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+    browser.get(sainsburys_unsalted_butter["url"])
+    time.sleep(5)
+    html = browser.page_source
+    browser.quit()
+    soup = BeautifulSoup(html, "html.parser")
+
+    content = soup.find(id="root")
+    prices = content.find("div", class_="pd__cost")
+    price_per_kg = prices.find("span", class_="pd__cost__per-unit")
+
+    return price_per_kg.text[1:][:-5:]
+
 waitrose_unsalted_butter["price_per_kg"] = get_waitrose_unsalted_butter_price_per_kg()
+sainsburys_unsalted_butter["price_per_kg"] = get_sainsburys_unsalted_butter_price_per_kg()
 
 now = datetime.datetime.now()
 date_str = str(now.date())
@@ -45,5 +75,6 @@ dbcursor.execute(sql, sql_val)
 # database.commit()
 
 print(dbcursor.rowcount, "record inserted.")
-print('%s: Unsalted Butter at Waitrose is £%s/kg' % (date_str, waitrose_unsalted_butter["price_per_kg"]))
+print("%s: Unsalted Butter at Waitrose is £%s/kg" % (date_str, waitrose_unsalted_butter["price_per_kg"]))
+print("%s: Unsalted Butter at Sainsbury's is £%s/kg" % (date_str, sainsburys_unsalted_butter["price_per_kg"]))
 time.sleep(5)
