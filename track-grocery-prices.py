@@ -67,12 +67,16 @@ database = mysql.connector.connect(
     database="grocery_prices"
 )
 
-sql = "INSERT INTO unsalted_butter_price_per_kg (Date, Waitrose) VALUES (%s, %s)"
-sql_val = (date_str, waitrose_unsalted_butter["price_per_kg"])
+sql = "INSERT INTO unsalted_butter_price_per_kg (Date, Waitrose, Sainsburys) VALUES (%s, %s, %s)"
+sql_val = (
+    date_str,
+    waitrose_unsalted_butter["price_per_kg"],
+    sainsburys_unsalted_butter["price_per_kg"]
+    )
 
 dbcursor = database.cursor()
 dbcursor.execute(sql, sql_val)
-# database.commit()
+database.commit()
 
 print(dbcursor.rowcount, "record inserted.")
 print("%s: Unsalted Butter at Waitrose is £%s/kg" % (date_str, waitrose_unsalted_butter["price_per_kg"]))
