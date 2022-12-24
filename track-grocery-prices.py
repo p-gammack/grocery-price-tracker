@@ -93,7 +93,7 @@ sql_val = (
 
 dbcursor = database.cursor()
 dbcursor.execute(sql, sql_val)
-# database.commit()
+database.commit()
 
 print(dbcursor.rowcount, "record inserted.")
 print("%s: Unsalted Butter at Waitrose is £%s/kg" % (date_str, waitrose_unsalted_butter["price_per_kg"]))
