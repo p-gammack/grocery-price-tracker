@@ -10,6 +10,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from pathlib import Path
 
+request_headers = {'User-Agent': 'Mozilla/5.0'}
+
 chrome_options = Options()
 # chrome_options.add_argument("--headless")
 chrome_options.add_argument("--incognito")
@@ -42,6 +44,16 @@ def get_waitrose_unsalted_butter_price_per_kg():
 
     return price_per_kg.text[2:][:-4:]
 
+def get_tesco_unsalted_butter_price_per_kg():
+    page = requests.get(tesco_unsalted_butter["url"], headers=request_headers)
+    soup = BeautifulSoup(page.content, "html.parser")
+
+    content = soup.find(id="content")
+    price_per_kg_parent = content.find(class_="price-details--wrapper")
+    price_per_kg = price_per_kg_parent.find("span", class_="value")
+
+    return price_per_kg.text
+
 def get_sainsburys_unsalted_butter_price_per_kg():
     browser = webdriver.Chrome(options=chrome_options)
     # browser.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
@@ -58,6 +70,7 @@ def get_sainsburys_unsalted_butter_price_per_kg():
     return price_per_kg.text[1:][:-5:]
 
 waitrose_unsalted_butter["price_per_kg"] = get_waitrose_unsalted_butter_price_per_kg()
+tesco_unsalted_butter["price_per_kg"] = get_tesco_unsalted_butter_price_per_kg()
 sainsburys_unsalted_butter["price_per_kg"] = get_sainsburys_unsalted_butter_price_per_kg()
 
 now = datetime.datetime.now()
