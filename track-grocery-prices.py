@@ -35,7 +35,7 @@ sainsburys_unsalted_butter = {
 }
 
 def get_waitrose_unsalted_butter_price_per_kg():
-    page = requests.get(waitrose_unsalted_butter["url"])
+    page = requests.get(waitrose_unsalted_butter["url"], headers=request_headers)
     soup = BeautifulSoup(page.content, "html.parser")
 
     content = soup.find(id="content")
@@ -92,7 +92,7 @@ sql_val = (
 
 dbcursor = database.cursor()
 dbcursor.execute(sql, sql_val)
-database.commit()
+# database.commit()
 
 print(dbcursor.rowcount, "record inserted.")
 print("%s: Unsalted Butter at Waitrose is £%s/kg" % (date_str, waitrose_unsalted_butter["price_per_kg"]))
