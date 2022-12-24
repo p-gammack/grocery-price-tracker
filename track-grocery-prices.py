@@ -25,6 +25,9 @@ chrome_options.add_argument("--incognito")
 waitrose_unsalted_butter = {
     "url": 'https://www.waitrose.com/ecom/products/essential-unsalted-dairy-butter/495389-70038-70039'
 }
+tesco_unsalted_butter = {
+    "url": 'https://www.tesco.com/groceries/en-GB/products/261819888'
+}
 sainsburys_unsalted_butter = {
     "url": 'https://www.sainsburys.co.uk/gol-ui/product/sainsburys-english-butter--unsalted-250g'
 }
