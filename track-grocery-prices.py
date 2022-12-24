@@ -10,7 +10,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from pathlib import Path
 
-request_headers = {'User-Agent': 'Mozilla/5.0'}
+request_headers = {'User-Agent': 'Mozilla/5.0'} # to prevent bot detection
 
 chrome_options = Options()
 # chrome_options.add_argument("--headless")
@@ -83,10 +83,11 @@ database = mysql.connector.connect(
     database="grocery_prices"
 )
 
-sql = "INSERT INTO unsalted_butter_price_per_kg (Date, Waitrose, Sainsburys) VALUES (%s, %s, %s)"
+sql = "INSERT INTO unsalted_butter_price_per_kg (Date, Waitrose, Tesco, Sainsburys) VALUES (%s, %s, %s, %s)"
 sql_val = (
     date_str,
     waitrose_unsalted_butter["price_per_kg"],
+    tesco_unsalted_butter["price_per_kg"],
     sainsburys_unsalted_butter["price_per_kg"]
     )
 
@@ -96,5 +97,6 @@ dbcursor.execute(sql, sql_val)
 
 print(dbcursor.rowcount, "record inserted.")
 print("%s: Unsalted Butter at Waitrose is £%s/kg" % (date_str, waitrose_unsalted_butter["price_per_kg"]))
+print("%s: Unsalted Butter at Tesco is £%s/kg" % (date_str, tesco_unsalted_butter["price_per_kg"]))
 print("%s: Unsalted Butter at Sainsbury's is £%s/kg" % (date_str, sainsburys_unsalted_butter["price_per_kg"]))
 time.sleep(5)
