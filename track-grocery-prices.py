@@ -49,7 +49,7 @@ def get_tesco_unsalted_butter_price_per_kg():
     soup = BeautifulSoup(page.content, "html.parser")
 
     content = soup.find(id="content")
-    price_per_kg_parent = content.find(class_="price-details--wrapper")
+    price_per_kg_parent = content.find(class_="price-per-quantity-weight")
     price_per_kg = price_per_kg_parent.find("span", class_="value")
 
     return price_per_kg.text
