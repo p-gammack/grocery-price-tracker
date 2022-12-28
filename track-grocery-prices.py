@@ -87,6 +87,7 @@ def get_aldi_unsalted_butter_price_per_kg():
 waitrose_unsalted_butter["price_per_kg"] = get_waitrose_unsalted_butter_price_per_kg()
 tesco_unsalted_butter["price_per_kg"] = get_tesco_unsalted_butter_price_per_kg()
 sainsburys_unsalted_butter["price_per_kg"] = get_sainsburys_unsalted_butter_price_per_kg()
+aldi_unsalted_butter["price_per_kg"] = get_aldi_unsalted_butter_price_per_kg()
 
 now = datetime.datetime.now()
 date_str = str(now.date())
@@ -114,4 +115,5 @@ print(dbcursor.rowcount, "record inserted.")
 print("%s: Unsalted Butter at Waitrose is £%s/kg" % (date_str, waitrose_unsalted_butter["price_per_kg"]))
 print("%s: Unsalted Butter at Tesco is £%s/kg" % (date_str, tesco_unsalted_butter["price_per_kg"]))
 print("%s: Unsalted Butter at Sainsbury's is £%s/kg" % (date_str, sainsburys_unsalted_butter["price_per_kg"]))
+print("%s: Unsalted Butter at Aldi is £%s/kg" % (date_str, aldi_unsalted_butter["price_per_kg"]))
 time.sleep(5)
