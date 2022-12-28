@@ -73,12 +73,16 @@ def get_sainsburys_unsalted_butter_price_per_kg():
     return price_per_kg.text[1:][:-5:]
 
 def get_aldi_unsalted_butter_price_per_kg():
-    page = requests.get(aldi_unsalted_butter["url"], headers=request_headers)
-    soup = BeautifulSoup(page.content, "html.parser")
+    browser = webdriver.Chrome(options=chrome_options)
+    browser.get(aldi_unsalted_butter["url"])
+    time.sleep(5)
+    html = browser.page_source
+    browser.quit()
+    soup = BeautifulSoup(html, "html.parser")
 
-    price_per_kg = soup.find("small", class_="mr-1")
+    price_per_kg_parent = soup.find("small", class_="mr-1", property="price")
     
-    return price_per_kg[1:][:-7:]
+    return price_per_kg_parent.span.text[1:][:-7:]
 
 waitrose_unsalted_butter["price_per_kg"] = get_waitrose_unsalted_butter_price_per_kg()
 tesco_unsalted_butter["price_per_kg"] = get_tesco_unsalted_butter_price_per_kg()
