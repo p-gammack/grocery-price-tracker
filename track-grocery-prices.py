@@ -99,12 +99,13 @@ database = mysql.connector.connect(
     database="grocery_prices"
 )
 
-sql = "INSERT INTO unsalted_butter_price_per_kg (Date, Waitrose, Tesco, Sainsburys) VALUES (%s, %s, %s, %s)"
+sql = "INSERT INTO unsalted_butter_price_per_kg (Date, Waitrose, Tesco, Sainsburys, Aldi) VALUES (%s, %s, %s, %s, %s)"
 sql_val = (
     date_str,
     waitrose_unsalted_butter["price_per_kg"],
     tesco_unsalted_butter["price_per_kg"],
-    sainsburys_unsalted_butter["price_per_kg"]
+    sainsburys_unsalted_butter["price_per_kg"],
+    aldi_unsalted_butter["price_per_kg"]
     )
 
 dbcursor = database.cursor()
