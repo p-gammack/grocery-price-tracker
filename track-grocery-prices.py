@@ -33,6 +33,9 @@ tesco_unsalted_butter = {
 sainsburys_unsalted_butter = {
     "url": 'https://www.sainsburys.co.uk/gol-ui/product/sainsburys-english-butter--unsalted-250g'
 }
+aldi_unsalted_butter = {
+    "url": 'https://groceries.aldi.co.uk/en-GB/p-cowbelle-british-unsalted-butter-250g/4088600190112'
+}
 
 def get_waitrose_unsalted_butter_price_per_kg():
     page = requests.get(waitrose_unsalted_butter["url"], headers=request_headers)
@@ -69,9 +72,22 @@ def get_sainsburys_unsalted_butter_price_per_kg():
 
     return price_per_kg.text[1:][:-5:]
 
+def get_aldi_unsalted_butter_price_per_kg():
+    browser = webdriver.Chrome(options=chrome_options)
+    browser.get(aldi_unsalted_butter["url"])
+    time.sleep(5)
+    html = browser.page_source
+    browser.quit()
+    soup = BeautifulSoup(html, "html.parser")
+
+    price_per_kg_parent = soup.find("small", class_="mr-1", property="price")
+    
+    return price_per_kg_parent.span.text[1:][:-7:]
+
 waitrose_unsalted_butter["price_per_kg"] = get_waitrose_unsalted_butter_price_per_kg()
 tesco_unsalted_butter["price_per_kg"] = get_tesco_unsalted_butter_price_per_kg()
 sainsburys_unsalted_butter["price_per_kg"] = get_sainsburys_unsalted_butter_price_per_kg()
+aldi_unsalted_butter["price_per_kg"] = get_aldi_unsalted_butter_price_per_kg()
 
 now = datetime.datetime.now()
 date_str = str(now.date())
@@ -83,12 +99,13 @@ database = mysql.connector.connect(
     database="grocery_prices"
 )
 
-sql = "INSERT INTO unsalted_butter_price_per_kg (Date, Waitrose, Tesco, Sainsburys) VALUES (%s, %s, %s, %s)"
+sql = "INSERT INTO unsalted_butter_price_per_kg (Date, Waitrose, Tesco, Sainsburys, Aldi) VALUES (%s, %s, %s, %s, %s)"
 sql_val = (
     date_str,
     waitrose_unsalted_butter["price_per_kg"],
     tesco_unsalted_butter["price_per_kg"],
-    sainsburys_unsalted_butter["price_per_kg"]
+    sainsburys_unsalted_butter["price_per_kg"],
+    aldi_unsalted_butter["price_per_kg"]
     )
 
 dbcursor = database.cursor()
@@ -99,4 +116,5 @@ print(dbcursor.rowcount, "record inserted.")
 print("%s: Unsalted Butter at Waitrose is £%s/kg" % (date_str, waitrose_unsalted_butter["price_per_kg"]))
 print("%s: Unsalted Butter at Tesco is £%s/kg" % (date_str, tesco_unsalted_butter["price_per_kg"]))
 print("%s: Unsalted Butter at Sainsbury's is £%s/kg" % (date_str, sainsburys_unsalted_butter["price_per_kg"]))
+print("%s: Unsalted Butter at Aldi is £%s/kg" % (date_str, aldi_unsalted_butter["price_per_kg"]))
 time.sleep(5)
