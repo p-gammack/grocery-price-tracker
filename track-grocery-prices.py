@@ -33,6 +33,9 @@ tesco_unsalted_butter = {
 sainsburys_unsalted_butter = {
     "url": 'https://www.sainsburys.co.uk/gol-ui/product/sainsburys-english-butter--unsalted-250g'
 }
+aldi_unsalted_butter = {
+    "url": 'https://groceries.aldi.co.uk/en-GB/p-cowbelle-british-unsalted-butter-250g/4088600190112'
+}
 
 def get_waitrose_unsalted_butter_price_per_kg():
     page = requests.get(waitrose_unsalted_butter["url"], headers=request_headers)
