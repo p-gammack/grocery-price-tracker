@@ -87,10 +87,23 @@ def get_aldi_unsalted_butter_price_per_kg():
     
     return price_per_kg_parent.span.text[1:][:-7:]
 
+def get_asda_unsalted_butter_price_per_kg():
+    browser = webdriver.Chrome(options=chrome_options)
+    browser.get(asda_unsalted_butter["url"])
+    time.sleep(5)
+    html = browser.page_source
+    browser.quit()
+    soup = BeautifulSoup(html, "html.parser")
+
+    price_per_kg = soup.find("span", class_="co-product__price-per-uom")
+
+    return price_per_kg.text[2:][:-4:]
+
 waitrose_unsalted_butter["price_per_kg"] = get_waitrose_unsalted_butter_price_per_kg()
 tesco_unsalted_butter["price_per_kg"] = get_tesco_unsalted_butter_price_per_kg()
 sainsburys_unsalted_butter["price_per_kg"] = get_sainsburys_unsalted_butter_price_per_kg()
 aldi_unsalted_butter["price_per_kg"] = get_aldi_unsalted_butter_price_per_kg()
+asda_unsalted_butter["price_per_kg"] = get_asda_unsalted_butter_price_per_kg()
 
 now = datetime.datetime.now()
 date_str = str(now.date())
