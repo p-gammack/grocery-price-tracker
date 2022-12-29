@@ -133,4 +133,5 @@ print("%s: Unsalted Butter at Waitrose is £%s/kg" % (date_str, waitrose_unsalte
 print("%s: Unsalted Butter at Tesco is £%s/kg" % (date_str, tesco_unsalted_butter["price_per_kg"]))
 print("%s: Unsalted Butter at Sainsbury's is £%s/kg" % (date_str, sainsburys_unsalted_butter["price_per_kg"]))
 print("%s: Unsalted Butter at Aldi is £%s/kg" % (date_str, aldi_unsalted_butter["price_per_kg"]))
+print("%s: Unsalted Butter at ASDA is £%s/kg" % (date_str, asda_unsalted_butter["price_per_kg"]))
 time.sleep(5)
