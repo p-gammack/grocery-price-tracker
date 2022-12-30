@@ -102,11 +102,21 @@ def get_asda_unsalted_butter_price_per_kg():
 
     return price_per_kg.text[2:][:-4:]
 
+def get_lidl_unsalted_butter_price_per_kg():
+    page = requests.get(lidl_unsalted_butter["url"])
+    soup = BeautifulSoup(page.content, "html.parser")
+
+    price_per_100g = soup.find(class_="pricebox__basic-quantity")
+    price_per_kg = float(price_per_100g.text.strip()[6:][:-6:]) * 0.1
+
+    return ("%.2f" % price_per_kg)
+
 waitrose_unsalted_butter["price_per_kg"] = get_waitrose_unsalted_butter_price_per_kg()
 tesco_unsalted_butter["price_per_kg"] = get_tesco_unsalted_butter_price_per_kg()
 sainsburys_unsalted_butter["price_per_kg"] = get_sainsburys_unsalted_butter_price_per_kg()
 aldi_unsalted_butter["price_per_kg"] = get_aldi_unsalted_butter_price_per_kg()
 asda_unsalted_butter["price_per_kg"] = get_asda_unsalted_butter_price_per_kg()
+lidl_unsalted_butter["price_per_kg"] = get_lidl_unsalted_butter_price_per_kg()
 
 now = datetime.datetime.now()
 date_str = str(now.date())
