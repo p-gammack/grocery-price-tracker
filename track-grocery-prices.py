@@ -106,8 +106,11 @@ def get_lidl_unsalted_butter_price_per_kg():
     page = requests.get(lidl_unsalted_butter["url"])
     soup = BeautifulSoup(page.content, "html.parser")
 
-    price_per_100g = soup.find(class_="pricebox__basic-quantity")
-    price_per_kg = float(price_per_100g.text.strip()[6:][:-6:]) * 0.1
+    ### 2022-12-30 WARNING: Price per item and price per unit differ on webpage (assuming price per item is correct for now) ###
+    # price_per_100g = soup.find(class_="pricebox__basic-quantity")
+    # price_per_kg = float(price_per_100g.text.strip()[6:][:-6:]) * 0.1
+    price_per_item = soup.find("span", class_="pricebox__price")
+    price_per_kg = float(price_per_item.text.strip()[2:]) * 4 # std item weight = 250g
 
     return ("%.2f" % price_per_kg)
 
