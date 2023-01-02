@@ -161,11 +161,7 @@ dbcursor = database.cursor()
 # dbcursor.execute(sql, sql_val)
 # database.commit()
 
-print(dbcursor.rowcount, "record inserted.")
-print("%s: Unsalted Butter at Waitrose is £%s/kg" % (date_str, shop["waitrose"]["unsalted_butter"]["price_per_kg"]))
-print("%s: Unsalted Butter at Tesco is £%s/kg" % (date_str, shop["tesco"]["unsalted_butter"]["price_per_kg"]))
-print("%s: Unsalted Butter at Sainsbury's is £%s/kg" % (date_str, shop["sainsburys"]["unsalted_butter"]["price_per_kg"]))
-print("%s: Unsalted Butter at Aldi is £%s/kg" % (date_str, shop["aldi"]["unsalted_butter"]["price_per_kg"]))
-print("%s: Unsalted Butter at ASDA is £%s/kg" % (date_str, shop["asda"]["unsalted_butter"]["price_per_kg"]))
-print("%s: Unsalted Butter at Lidl is £%s/kg" % (date_str, shop["lidl"]["unsalted_butter"]["price_per_kg"]))
+for key in shop.keys():
+    print("%s: Unsalted Butter at %s is £%s/kg" % (date_str, key, shop[key]["unsalted_butter"]["price_per_kg"]))
+
 time.sleep(5)
