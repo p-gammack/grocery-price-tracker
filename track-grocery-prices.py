@@ -158,8 +158,8 @@ sql_val = (
     )
 
 dbcursor = database.cursor()
-# dbcursor.execute(sql, sql_val)
-# database.commit()
+dbcursor.execute(sql, sql_val)
+database.commit()
 
 print("%s: %s record inserted." % (date_str, dbcursor.rowcount))
 for key in shop.keys():
