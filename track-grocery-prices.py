@@ -163,6 +163,6 @@ dbcursor = database.cursor()
 
 print("%s: %s record inserted." % (date_str, dbcursor.rowcount))
 for key in shop.keys():
-    print("Unsalted Butter at %s is £%s/kg" % (key, shop[key]["unsalted_butter"]["price_per_kg"]))
+    print("Unsalted Butter at %s is £%s/kg" % (key.capitalize(), shop[key]["unsalted_butter"]["price_per_kg"]))
 
 time.sleep(5)
