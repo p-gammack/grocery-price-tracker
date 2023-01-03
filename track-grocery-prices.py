@@ -5,7 +5,6 @@ import time
 import re
 import requests
 import mysql.connector
-# import json
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
