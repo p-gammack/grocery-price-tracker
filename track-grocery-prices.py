@@ -55,6 +55,11 @@ shop = {
         "unsalted_butter": {
             "url": 'https://www.lidl.co.uk/p/aberdoyle-dairies/aberdoyle-dairies-scottish-unsalted-butter/p16722'
         }    
+    },
+    "morrisons": {
+        "unsalted_butter": {
+            "url": 'https://groceries.morrisons.com/products/morrisons-unsalted-british-butter-294767011'
+        }
     }
 }
 
