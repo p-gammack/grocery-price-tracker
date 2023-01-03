@@ -55,6 +55,11 @@ shop = {
         "unsalted_butter": {
             "url": 'https://www.lidl.co.uk/p/aberdoyle-dairies/aberdoyle-dairies-scottish-unsalted-butter/p16722'
         }    
+    },
+    "morrisons": {
+        "unsalted_butter": {
+            "url": 'https://groceries.morrisons.com/products/morrisons-unsalted-british-butter-294767011'
+        }
     }
 }
 
@@ -129,12 +134,21 @@ def get_lidl_unsalted_butter_price_per_kg():
 
     return ("%.2f" % price_per_kg)
 
+def get_morrisons_unsalted_butter_price_per_kg():
+    page = requests.get(shop["morrisons"]["unsalted_butter"]["url"], headers=request_headers)
+    soup = BeautifulSoup(page.content, "html.parser")
+
+    price_per_kg = soup.find("span", class_="bop-price__per")
+
+    return price_per_kg.text[1:][:-7:]
+
 shop["waitrose"]["unsalted_butter"]["price_per_kg"] = get_waitrose_unsalted_butter_price_per_kg()
 shop["tesco"]["unsalted_butter"]["price_per_kg"] = get_tesco_unsalted_butter_price_per_kg()
 shop["sainsburys"]["unsalted_butter"]["price_per_kg"] = get_sainsburys_unsalted_butter_price_per_kg()
 shop["aldi"]["unsalted_butter"]["price_per_kg"] = get_aldi_unsalted_butter_price_per_kg()
 shop["asda"]["unsalted_butter"]["price_per_kg"] = get_asda_unsalted_butter_price_per_kg()
 shop["lidl"]["unsalted_butter"]["price_per_kg"] = get_lidl_unsalted_butter_price_per_kg()
+shop["morrisons"]["unsalted_butter"]["price_per_kg"] = get_morrisons_unsalted_butter_price_per_kg()
 
 now = datetime.datetime.now()
 date_str = str(now.date())
@@ -146,7 +160,7 @@ database = mysql.connector.connect(
     database="grocery_prices"
 )
 
-sql = "INSERT INTO unsalted_butter_price_per_kg (Date, Waitrose, Tesco, Sainsburys, Aldi, ASDA, Lidl) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+sql = "INSERT INTO unsalted_butter_price_per_kg (Date, Waitrose, Tesco, Sainsburys, Aldi, ASDA, Lidl, Morrisons) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 sql_val = (
     date_str,
     shop["waitrose"]["unsalted_butter"]["price_per_kg"],
@@ -154,7 +168,8 @@ sql_val = (
     shop["sainsburys"]["unsalted_butter"]["price_per_kg"],
     shop["aldi"]["unsalted_butter"]["price_per_kg"],
     shop["asda"]["unsalted_butter"]["price_per_kg"],
-    shop["lidl"]["unsalted_butter"]["price_per_kg"]
+    shop["lidl"]["unsalted_butter"]["price_per_kg"],
+    shop["morrisons"]["unsalted_butter"]["price_per_kg"]
     )
 
 dbcursor = database.cursor()
