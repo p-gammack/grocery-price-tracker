@@ -85,6 +85,7 @@ def get_tesco_unsalted_butter_price_per_kg():
 
 def get_sainsburys_unsalted_butter_price_per_kg():
     browser = webdriver.Chrome(options=chrome_options)
+    browser.minimize_window()
     # browser.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
     browser.get(shop["sainsburys"]["unsalted_butter"]["url"])
     time.sleep(5)
@@ -100,6 +101,7 @@ def get_sainsburys_unsalted_butter_price_per_kg():
 
 def get_aldi_unsalted_butter_price_per_kg():
     browser = webdriver.Chrome(options=chrome_options)
+    browser.minimize_window()
     browser.get(shop["aldi"]["unsalted_butter"]["url"])
     time.sleep(5)
     html = browser.page_source
@@ -112,6 +114,7 @@ def get_aldi_unsalted_butter_price_per_kg():
 
 def get_asda_unsalted_butter_price_per_kg():
     browser = webdriver.Chrome(options=chrome_options)
+    browser.minimize_window()
     browser.get(shop["asda"]["unsalted_butter"]["url"])
     time.sleep(5)
     html = browser.page_source
