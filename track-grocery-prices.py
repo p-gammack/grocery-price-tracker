@@ -123,7 +123,7 @@ def get_asda_unsalted_butter_price_per_kg():
     return price_per_kg.text[2:][:-4:]
 
 def get_lidl_unsalted_butter_price_per_kg():
-    page = requests.get(shop["lidl"]["unsalted_butter"]["url"])
+    page = requests.get(shop["lidl"]["unsalted_butter"]["url"], headers=request_headers)
     soup = BeautifulSoup(page.content, "html.parser")
 
     ### 2022-12-30 WARNING: Price per item and price per unit differ on webpage (assuming price per item is correct for now) ###
