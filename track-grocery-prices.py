@@ -1,5 +1,6 @@
 #! python3.11
 
+import sys
 import datetime
 import time
 import re
@@ -176,3 +177,5 @@ for key in shop.keys():
     print("Unsalted Butter at %s is £%s/kg" % (key.capitalize(), shop[key]["unsalted_butter"]["price_per_kg"]))
 
 time.sleep(5)
+
+sys.exit()
