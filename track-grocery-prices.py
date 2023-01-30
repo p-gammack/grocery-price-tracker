@@ -33,7 +33,7 @@ shop = {
     },
     "tesco": {
         "unsalted_butter": {
-            "url": 'https://www.tesco.com/groceries/en-GB/products/261819888'
+            "url": 'https://www.tesco.com/groceries/en-GB/products/290921181'
         }
     },
     "sainsburys": {
@@ -95,7 +95,7 @@ def get_sainsburys_unsalted_butter_price_per_kg():
 
     content = soup.find(id="root")
     prices = content.find("div", class_="pd__cost")
-    price_per_kg = prices.find("span", class_="pd__cost__per-unit")
+    price_per_kg = prices.find("span", class_="pd__cost__unit-price-per-measure")
 
     return price_per_kg.text[1:][:-5:]
 
